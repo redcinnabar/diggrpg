@@ -6,7 +6,7 @@ LIBS=`allegro-config --libs`
 OBJ=main.o tiles_ds.o
 
 $(PROGRAM): $(OBJ)
-	$(CC) $(CFLAGS) $(LIBS) $^ -o $@
+	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
 
 main.o: main.c
 	$(CC) $(CFLAGS) -c $< -o $@
