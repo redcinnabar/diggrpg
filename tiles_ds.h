@@ -8,6 +8,11 @@ typedef int tile_t[TILE_SIZE_H];
 
 tile_t t_mask;
 tile_t t1;
+tile_t t2;
+tile_t t3;
+tile_t t4;
+tile_t t5;
+tile_t t6;
 
 #if 0
 int t2[32];
