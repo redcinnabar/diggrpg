@@ -31,30 +31,77 @@ BITMAP *load_tile_bitmap(tile_t *t, unsigned char fg, unsigned char bg)
 		line = image->line[i];
 		cur_t = (*t)[i];
 		cur_t_mask = t_mask[i];
-		for (j = TILE_SIZE_W - 1; j >= 0; --j) {
+		for (j = TILE_SIZE_W - 1; j >= 0; --j, ++line) {
 			bit_mask = 1 << j;
 			if (cur_t_mask & bit_mask) {
-				if (cur_t & (1 << j))
+				if (cur_t & bit_mask)
 					*line = fg;
 				else
 					*line = bg;
 			} else {
 				*line = 0; /* TRANSPARENT */
 			}
-			++line;
 		}
 	}
 	return image;
 }
 
+void blit_tile(BITMAP *sbuf, tile_t *t, int sx, int sy,
+				unsigned char fg, unsigned char bg)
+{
+	int i, j;
+	unsigned char *line;
+	int *cur_t, *cur_t_mask;
+	int bit_mask;
+
+	cur_t = t;
+	cur_t_mask = t_mask;
+	// TODO: limit on BITMAP height
+	for (i = sy; i < TILE_SIZE_H + sy; ++i) {
+		line = sbuf->line[i] + sx;
+		//cur_t = (*t)[i];
+		//cur_t_mask = t_mask[i];
+		// TODO: limit on BITMAP width
+		for (j = TILE_SIZE_W - 1; j >= 0; --j, ++line) {
+			bit_mask = 1 << j; //TODO: LSB?
+			if (*cur_t_mask & bit_mask) {
+				if (*cur_t & bit_mask)
+					*line = fg;
+				else
+					*line = bg;
+			} else {
+				//*line = 0; /* TRANSPARENT */
+			}
+		}
+		++cur_t;
+		++cur_t_mask;
+	}
+}
+
+void blit_tile_map(BITMAP *sbuf, struct tile_map *map, int xo, int yo)
+{
+	int i, j;
+	int sx, sy;
+	for (j = 0; j < map->h; ++j) {
+		for (i = 0; i < map->w; ++i) {
+			// TODO: optimize
+			sx = xo + (i + j) * (TILE_SIZE_W >> 1);
+			sy = yo + (map->w - 1 + j - i) * (TILE_SIZE_H >> 1);
+			printf("DEBUG: sx: %d; sy: %d\n", sx, sy);
+			blit_tile(sbuf, map->tn[j][i].t, sx, sy,
+					map->tn[j][i].fg, map->tn[j][i].bg);
+		}
+	}
+}
+
 int main(int argc, char *argv[])
 {
-	BITMAP *image_t1;
+	/*BITMAP *image_t1;
 	BITMAP *image_t2;
 	BITMAP *image_t3;
 	BITMAP *image_t4;
 	BITMAP *image_t5;
-	BITMAP *image_t6;
+	BITMAP *image_t6;*/
 
 	int gfx_mode = GFX_AUTODETECT;
 	int resx = 800;
@@ -85,7 +132,13 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	image_t1 = load_tile_bitmap(&t1, 3, 11);
+	BITMAP *sbuf = create_bitmap_ex(8, SCREEN_W, SCREEN_H);
+	clear_bitmap(sbuf);
+
+	blit_tile_map(sbuf, &map1, 50, 50);
+	blit(sbuf, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+
+	/*image_t1 = load_tile_bitmap(&t1, 3, 11);
 	image_t2 = load_tile_bitmap(&t2, 4, 12);
 	image_t3 = load_tile_bitmap(&t3, 1, 2);
 	image_t4 = load_tile_bitmap(&t4, 5, 6);
@@ -104,17 +157,17 @@ int main(int argc, char *argv[])
 			TILE_SIZE_W / 2 + TILE_SIZE_W, TILE_SIZE_H / 2,
 			image_t5->w, image_t5->h);
 	masked_blit(image_t6, screen, 0, 0, TILE_SIZE_W, TILE_SIZE_H,
-			image_t6->w, image_t6->h);
+			image_t6->w, image_t6->h);*/
 	
 	readkey();
 
 
-	destroy_bitmap(image_t6);
+	/*destroy_bitmap(image_t6);
 	destroy_bitmap(image_t5);
 	destroy_bitmap(image_t4);
 	destroy_bitmap(image_t3);
 	destroy_bitmap(image_t2);
-	destroy_bitmap(image_t1);
+	destroy_bitmap(image_t1);*/
 
 	set_gfx_mode(GFX_TEXT, 0, 0, 0, 0);
 	printf("Hello, iso, attempt #3, tst: %d\n", 0b0011);
