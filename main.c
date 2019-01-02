@@ -46,18 +46,33 @@ BITMAP *load_tile_bitmap(tile_t *t, unsigned char fg, unsigned char bg)
 	return image;
 }
 
-void blit_tile(BITMAP *sbuf, tile_t *t, int sx, int sy,
+void blit_tile(BITMAP *sbuf, enum tile_type type, int *t, int sx, int sy,
 				unsigned char fg, unsigned char bg)
 {
 	int i, j;
 	unsigned char *line;
 	int *cur_t, *cur_t_mask;
 	int bit_mask;
+	int sy_off = 0;
+	int rsy;
+
+	if (type == TILE_TYPE2) {
+		sy_off = TILE_SIZE_H;
+	}
 
 	cur_t = t;
-	cur_t_mask = t_mask;
+	if (type == TILE_TYPE2)
+		cur_t_mask = t_mask2;
+	else
+		cur_t_mask = t_mask;
+	rsy = sy - sy_off;
+	if (rsy < 0) {
+		cur_t -= rsy;
+		cur_t_mask -= rsy;
+		rsy = 0;
+	}
 	// TODO: limit on BITMAP height
-	for (i = sy; i < TILE_SIZE_H + sy; ++i) {
+	for (i = rsy; i < TILE_SIZE_H + sy; ++i) {
 		line = sbuf->line[i] + sx;
 		//cur_t = (*t)[i];
 		//cur_t_mask = t_mask[i];
@@ -82,13 +97,15 @@ void blit_tile_map(BITMAP *sbuf, struct tile_map *map, int xo, int yo)
 {
 	int i, j;
 	int sx, sy;
+	struct tile_map_node *cnode;
 	for (j = 0; j < map->h; ++j) {
 		for (i = 0; i < map->w; ++i) {
 			// TODO: optimize
-			sx = xo + (i + j) * (TILE_SIZE_W >> 1);
-			sy = yo + (map->w - 1 + j - i) * (TILE_SIZE_H >> 1);
+			sx = xo + (map->w - 1 + i - j) * (TILE_SIZE_W >> 1);
+			sy = yo + (i + j) * (TILE_SIZE_H >> 1);
 			printf("DEBUG: sx: %d; sy: %d\n", sx, sy);
-			blit_tile(sbuf, map->tn[j][i].t, sx, sy,
+			cnode = &(map->tn[j][i]);
+			blit_tile(sbuf, cnode->type, cnode->t, sx, sy,
 					map->tn[j][i].fg, map->tn[j][i].bg);
 		}
 	}
@@ -135,7 +152,7 @@ int main(int argc, char *argv[])
 	BITMAP *sbuf = create_bitmap_ex(8, SCREEN_W, SCREEN_H);
 	clear_bitmap(sbuf);
 
-	blit_tile_map(sbuf, &map1, 50, 50);
+	blit_tile_map(sbuf, &map1, 50, 100);
 	blit(sbuf, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
 	/*image_t1 = load_tile_bitmap(&t1, 3, 11);
