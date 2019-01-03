@@ -55,16 +55,31 @@ void blit_tile(BITMAP *sbuf, enum tile_type type, int *t, int sx, int sy,
 	int bit_mask;
 	int sy_off = 0;
 	int rsy;
+	union tile_mask_2u *conv_2u;
 
-	if (type == TILE_TYPE2) {
+	/*if (type == TILE_TYPE2) {
 		sy_off = TILE_SIZE_H;
-	}
+	}*/
 
 	cur_t = t;
-	if (type == TILE_TYPE2)
+	switch (type) {
+	case TILE_TYPE2:
+		sy_off = TILE_SIZE_H;
+		cur_t_mask = t_mask2;
+		break;
+	case TILE_TYPE2_MASK:
+		sy_off = TILE_SIZE_H;
+		conv_2u = (union tile_mask_2u*)t;
+		cur_t_mask = &(conv_2u->sep.m);
+		break;
+	default:
+		cur_t_mask = t_mask;
+		break;
+	}
+	/*if (type == TILE_TYPE2)
 		cur_t_mask = t_mask2;
 	else
-		cur_t_mask = t_mask;
+		cur_t_mask = t_mask;*/
 	rsy = sy - sy_off;
 	if (rsy < 0) {
 		cur_t -= rsy;
@@ -74,8 +89,6 @@ void blit_tile(BITMAP *sbuf, enum tile_type type, int *t, int sx, int sy,
 	// TODO: limit on BITMAP height
 	for (i = rsy; i < TILE_SIZE_H + sy; ++i) {
 		line = sbuf->line[i] + sx;
-		//cur_t = (*t)[i];
-		//cur_t_mask = t_mask[i];
 		// TODO: limit on BITMAP width
 		for (j = TILE_SIZE_W - 1; j >= 0; --j, ++line) {
 			bit_mask = 1 << j; //TODO: LSB?
@@ -84,8 +97,6 @@ void blit_tile(BITMAP *sbuf, enum tile_type type, int *t, int sx, int sy,
 					*line = fg;
 				else
 					*line = bg;
-			} else {
-				//*line = 0; /* TRANSPARENT */
 			}
 		}
 		++cur_t;

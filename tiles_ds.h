@@ -8,21 +8,25 @@
 
 typedef int tile_t[TILE_SIZE_H];
 typedef int tile_2t[TILE_SIZE2_H];
-//typedef int tile_3t[TILE_SIZE3_H];
+typedef int tile_mask_2t[TILE_SIZE2_H * 2];
+
+union tile_mask_2u {
+	struct {
+		tile_2t d;
+		tile_2t m;
+	} sep;
+	tile_mask_2t raw;
+};
 
 enum tile_type {
 	TILE_TYPE = 0,
 	TILE_TYPE2,
-	TILE_TYPE3
+	TILE_TYPE2_MASK
 };
 
 struct tile_map_node {
 	enum tile_type type;
 	int *t;
-	/*union {
-		tile_t *t;
-		tile_2t *t2;
-	};*/
 	unsigned char bg, fg;
 };
 struct tile_map {
