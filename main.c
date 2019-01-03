@@ -70,7 +70,7 @@ void blit_tile(BITMAP *sbuf, enum tile_type type, int *t, int sx, int sy,
 	case TILE_TYPE2_MASK:
 		sy_off = TILE_SIZE_H;
 		conv_2u = (union tile_mask_2u*)t;
-		cur_t_mask = &(conv_2u->sep.m);
+		cur_t_mask = conv_2u->sep.m;
 		break;
 	default:
 		cur_t_mask = t_mask;
@@ -106,19 +106,32 @@ void blit_tile(BITMAP *sbuf, enum tile_type type, int *t, int sx, int sy,
 
 void blit_tile_map(BITMAP *sbuf, struct tile_map *map, int xo, int yo)
 {
-	int i, j;
+	int i, j, k;
 	int sx, sy;
 	struct tile_map_node *cnode;
-	for (j = 0; j < map->h; ++j) {
-		for (i = 0; i < map->w; ++i) {
-			// TODO: optimize
-			sx = xo + (map->w - 1 + i - j) * (TILE_SIZE_W >> 1);
-			sy = yo + (i + j) * (TILE_SIZE_H >> 1);
-			printf("DEBUG: sx: %d; sy: %d\n", sx, sy);
-			cnode = &(map->tn[j][i]);
-			blit_tile(sbuf, cnode->type, cnode->t, sx, sy,
-					map->tn[j][i].fg, map->tn[j][i].bg);
+	struct tile_map_layer *cur_layer;
+	int level;
+	cur_layer = map->layers;
+	while (cur_layer->level >= 0) {
+		//cur_layer = &(map->layers[k]);
+		level = cur_layer->level;
+		for (j = 0; j < map->h; ++j) {
+			for (i = 0; i < map->w; ++i) {
+				// TODO: optimize
+				sx = xo + (map->w - 1 + i - j)
+					* (TILE_SIZE_W >> 1);
+				sy = yo + (i + j) * (TILE_SIZE_H >> 1)
+					+ TILE_SIZE_H * (map->l - level);
+				//printf("DEBUG: sx: %d; sy: %d\n", sx, sy);
+				cnode = &(cur_layer->tn[j][i]);
+				if (cnode->t)
+					blit_tile(sbuf, cnode->type,
+						cnode->t, sx, sy,
+						cnode->fg, cnode->bg);
+			}
 		}
+		//return;
+		++cur_layer;
 	}
 }
 
@@ -198,9 +211,9 @@ int main(int argc, char *argv[])
 	destroy_bitmap(image_t1);*/
 
 	set_gfx_mode(GFX_TEXT, 0, 0, 0, 0);
-	printf("Hello, iso, attempt #3, tst: %d\n", 0b0011);
+	/*printf("Hello, iso, attempt #3, tst: %d\n", 0b0011);
 
-	print_tile(&t1);
+	print_tile(&t1);*/
 
 	return 0;
 }

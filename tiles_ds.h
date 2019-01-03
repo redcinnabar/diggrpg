@@ -29,9 +29,14 @@ struct tile_map_node {
 	int *t;
 	unsigned char bg, fg;
 };
-struct tile_map {
-	int w, h;
+struct tile_map_layer {
+	int level;
 	struct tile_map_node **tn;
+};
+struct tile_map {
+	int w, h, l;
+	//struct tile_map_node **tn;
+	struct tile_map_layer *layers;
 };
 
 tile_t t_mask;
