@@ -21,7 +21,9 @@ union tile_mask_2u {
 enum tile_type {
 	TILE_TYPE = 0,
 	TILE_TYPE2,
-	TILE_TYPE2_MASK
+	TILE_TYPE2_MASK,
+	TILE_TYPE2_WALL_L,
+	TILE_TYPE2_WALL_R
 };
 
 struct tile_map_node {
@@ -32,9 +34,10 @@ struct tile_map_node {
 struct tile_map_layer {
 	int level;
 	struct tile_map_node **tn;
+	struct tile_map_node ***tn_list;
 };
 struct tile_map {
-	int w, h, l;
+	int w, h, l; /* width, height, levels */
 	//struct tile_map_node **tn;
 	struct tile_map_layer *layers;
 };

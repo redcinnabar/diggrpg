@@ -357,6 +357,7 @@ struct tile_map_node
 struct tile_map_node *node_lines_l1[] =
 	{ nl1l1, nl2l1, nl3l1, nl4l1, nl5l1, nl6l1, nl7l1, nl8l1 };
 
+#if 0
 struct tile_map_node
 	nl1l2[] = {{0, 0, 0, 0 },{0, 0, 0, 0 },{0, 0, 0, 0 },{0, 0, 0, 0 },{2,tm2_2,12,2},{0, 0, 0, 0 },{0, 0, 0, 0 } },
 	nl2l2[] = {{0, 0, 0, 0 },{0, 0, 0, 0 },{0, 0, 0, 0 },{0, 0, 0, 0 }, {0, 0, 0, 0 },{0, 0, 0, 0 },{0, 0, 0, 0 } },
@@ -368,12 +369,28 @@ struct tile_map_node
 	nl8l2[] = {{0, 0, 0, 0 },{0, 0, 0, 0 },{0, 0, 0, 0 },{0, 0, 0, 0 }, {0, 0, 0, 0 },{0, 0, 0, 0 },{0, 0, 0, 0 } };
 struct tile_map_node *node_lines_l2[] =
 	{ nl1l2, nl2l2, nl3l2, nl4l2, nl5l2, nl6l2, nl7l2, nl8l2 };
-
+#endif
+struct tile_map_node
+	nl5x1l1[] = {{2, tm2_2, 12, 2}, {0, }},
+	nl5x4l1[] = {{1, t1_2, 4, 12}, {0, }},
+	nl5x6l1[] = {{2, tm1_2, 1, 14}, {0, }};
+struct tile_map_node
+	*nl_l1l1[] = {0, 0, 0, 0, nl5x1l1, 0, 0},
+	*nl_l2l1[] = {0, 0, 0, 0, 0,       0, 0},
+	*nl_l3l1[] = {0, 0, 0, 0, 0,       0, 0},
+	*nl_l4l1[] = {0, 0, 0, 0, nl5x4l1, 0, 0},
+	*nl_l5l1[] = {0, 0, 0, 0, 0,       0, 0},
+	*nl_l6l1[] = {0, 0, 0, 0, nl5x6l1, 0, 0},
+	*nl_l7l1[] = {0, 0, 0, 0, 0,       0, 0},
+	*nl_l8l1[] = {0, 0, 0, 0, 0,       0, 0};
+struct tile_map_node** node_lines_ll1[] =
+	{ nl_l1l1, nl_l2l1, nl_l3l1, nl_l4l1, nl_l5l1, nl_l6l1, nl_l7l1, nl_l8l1 };
 
 struct tile_map_layer layers[] = {
-	{ 0, node_lines_l1 },
-	{ 0, node_lines_l2 },
-	{ -1, NULL }
+	{ 0, node_lines_l1, NULL },
+	{ 0, NULL, node_lines_ll1 },
+	//{ 0, node_lines_l2, NULL },
+	{ -1, NULL, NULL }
 };
 
 struct tile_map map1 = { 7, 8, 1, layers };

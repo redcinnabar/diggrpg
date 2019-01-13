@@ -123,11 +123,21 @@ void blit_tile_map(BITMAP *sbuf, struct tile_map *map, int xo, int yo)
 				sy = yo + (i + j) * (TILE_SIZE_H >> 1)
 					+ TILE_SIZE_H * (map->l - level);
 				//printf("DEBUG: sx: %d; sy: %d\n", sx, sy);
-				cnode = &(cur_layer->tn[j][i]);
-				if (cnode->t)
-					blit_tile(sbuf, cnode->type,
-						cnode->t, sx, sy,
-						cnode->fg, cnode->bg);
+				if (cur_layer->tn) {
+					cnode = &(cur_layer->tn[j][i]);
+					if (cnode->t)
+						blit_tile(sbuf, cnode->type,
+							cnode->t, sx, sy,
+							cnode->fg, cnode->bg);
+				} else {
+					cnode = cur_layer->tn_list[j][i];
+					while (cnode && cnode->t) {
+						blit_tile(sbuf, cnode->type,
+							cnode->t, sx, sy,
+							cnode->fg, cnode->bg);
+						++cnode;
+					}
+				}
 			}
 		}
 		//return;
