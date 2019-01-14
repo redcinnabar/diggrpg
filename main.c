@@ -67,6 +67,8 @@ void blit_tile(BITMAP *sbuf, enum tile_type type, int *t, int sx, int sy,
 		sy_off = TILE_SIZE_H;
 		cur_t_mask = t_mask2;
 		break;
+	case TILE_TYPE2_WALL_L:
+	case TILE_TYPE2_WALL_R:
 	case TILE_TYPE2_MASK:
 		sy_off = TILE_SIZE_H;
 		conv_2u = (union tile_mask_2u*)t;
@@ -129,7 +131,8 @@ void blit_tile_map(BITMAP *sbuf, struct tile_map *map, int xo, int yo)
 						blit_tile(sbuf, cnode->type,
 							cnode->t, sx, sy,
 							cnode->fg, cnode->bg);
-				} else {
+				}
+				if (cur_layer->tn_list) {
 					cnode = cur_layer->tn_list[j][i];
 					while (cnode && cnode->t) {
 						blit_tile(sbuf, cnode->type,
