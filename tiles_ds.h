@@ -10,38 +10,6 @@ typedef int tile_t[TILE_SIZE_H];
 typedef int tile_2t[TILE_SIZE2_H];
 typedef int tile_mask_2t[TILE_SIZE2_H * 2];
 
-union tile_mask_2u {
-	struct {
-		tile_2t d;
-		tile_2t m;
-	} sep;
-	tile_mask_2t raw;
-};
-
-enum tile_type {
-	TILE_TYPE = 0,
-	TILE_TYPE2,
-	TILE_TYPE2_MASK,
-	TILE_TYPE2_WALL_L,
-	TILE_TYPE2_WALL_R
-};
-
-struct tile_map_node {
-	enum tile_type type;
-	int *t;
-	unsigned char bg, fg;
-};
-struct tile_map_layer {
-	int level;
-	struct tile_map_node **tn;
-	struct tile_map_node ***tn_list;
-};
-struct tile_map {
-	int w, h, l; /* width, height, levels */
-	//struct tile_map_node **tn;
-	struct tile_map_layer *layers;
-};
-
 tile_t t_mask;
 tile_t t1;
 tile_t t2;
@@ -51,8 +19,13 @@ tile_t t5;
 tile_t t6;
 
 tile_2t t_mask2;
+tile_2t t1_2;
 
-struct tile_map map1;
+tile_mask_2t tm1_2;
+tile_mask_2t tm2_2;
+
+tile_mask_2t wall1_l;
+tile_mask_2t wall1_r;
 
 #if 0
 int t2[32];

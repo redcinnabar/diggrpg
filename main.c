@@ -2,6 +2,7 @@
 
 #include <allegro.h>
 
+#include "map_ds.h"
 #include "tiles_ds.h"
 
 
@@ -57,10 +58,6 @@ void blit_tile(BITMAP *sbuf, enum tile_type type, int *t, int sx, int sy,
 	int rsy;
 	union tile_mask_2u *conv_2u;
 
-	/*if (type == TILE_TYPE2) {
-		sy_off = TILE_SIZE_H;
-	}*/
-
 	cur_t = t;
 	switch (type) {
 	case TILE_TYPE2:
@@ -78,10 +75,7 @@ void blit_tile(BITMAP *sbuf, enum tile_type type, int *t, int sx, int sy,
 		cur_t_mask = t_mask;
 		break;
 	}
-	/*if (type == TILE_TYPE2)
-		cur_t_mask = t_mask2;
-	else
-		cur_t_mask = t_mask;*/
+
 	rsy = sy - sy_off;
 	if (rsy < 0) {
 		cur_t -= rsy;
