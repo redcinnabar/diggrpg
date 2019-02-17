@@ -11,12 +11,7 @@ typedef int tile_2t[TILE_SIZE2_H];
 typedef int tile_mask_2t[TILE_SIZE2_H * 2];
 
 tile_t t_mask;
-tile_t t1;
-tile_t t2;
-tile_t t3;
-tile_t t4;
-tile_t t5;
-tile_t t6;
+tile_t t1, t2, t3, t4, t5, t6, t7;
 
 tile_2t t_mask2;
 tile_2t t1_2;

@@ -3,6 +3,7 @@
 #include <allegro.h>
 
 #include "map_ds.h"
+#include "map_m_ds.h"
 #include "tiles_ds.h"
 
 
@@ -57,6 +58,10 @@ void blit_tile(BITMAP *sbuf, enum tile_type type, int *t, int sx, int sy,
 	int sy_off = 0;
 	int rsy;
 	union tile_mask_2u *conv_2u;
+	int width, height;
+
+	if (sx >= sbuf->w)
+		return;
 
 	cur_t = t;
 	switch (type) {
@@ -77,17 +82,27 @@ void blit_tile(BITMAP *sbuf, enum tile_type type, int *t, int sx, int sy,
 	}
 
 	rsy = sy - sy_off;
-	if (rsy < 0) {
+	if (rsy <= 0) {
 		cur_t -= rsy;
 		cur_t_mask -= rsy;
 		rsy = 0;
 	}
+
+	if (rsy > sbuf->h)
+		return;
+
+	height = TILE_SIZE_H + sy;
+	if (height > sbuf->h)
+		height = sbuf->h;
+	width = sx + TILE_SIZE_W;
+	if (width > sbuf->w)
+		width = sbuf->w;
 	// TODO: limit on BITMAP height
-	for (i = rsy; i < TILE_SIZE_H + sy; ++i) {
+	for (i = rsy; i < height; ++i) {
 		line = sbuf->line[i] + sx;
 		// TODO: limit on BITMAP width
-		for (j = TILE_SIZE_W - 1; j >= 0; --j, ++line) {
-			bit_mask = 1 << j; //TODO: LSB?
+		for (j = width - sx - 1; j >= 0; --j, ++line) {
+			bit_mask = 1 << j; //TODO: LSB? TODO: fix when on width limit
 			if (*cur_t_mask & bit_mask) {
 				if (*cur_t & bit_mask)
 					*line = fg;
@@ -114,7 +129,7 @@ void blit_tile_map(BITMAP *sbuf, struct tile_map *map, int xo, int yo)
 		for (j = 0; j < map->h; ++j) {
 			for (i = 0; i < map->w; ++i) {
 				// TODO: optimize
-				sx = xo + (map->w - 1 + i - j)
+				sx = xo + (map->h - 1 + i - j)
 					* (TILE_SIZE_W >> 1);
 				sy = yo + (i + j) * (TILE_SIZE_H >> 1)
 					+ TILE_SIZE_H * (map->l - level);
@@ -141,6 +156,22 @@ void blit_tile_map(BITMAP *sbuf, struct tile_map *map, int xo, int yo)
 		++cur_layer;
 	}
 }
+
+
+char *map_name_test1 = "test1";
+char *map_name_metro = "metro";
+char *map_name_list[] = {"test1", "metro", NULL};
+
+enum cmd_resolution {
+	CMD_RESOLUTION_800_600,
+	CMD_RESOLUTION_640_480,
+	CMD_RESOLUTION_320_200
+};
+struct cmd_args {
+	int is_windowed;
+	enum cmd_resolution res;
+	char *map_name;
+};
 
 int main(int argc, char *argv[])
 {
@@ -183,7 +214,9 @@ int main(int argc, char *argv[])
 	BITMAP *sbuf = create_bitmap_ex(8, SCREEN_W, SCREEN_H);
 	clear_bitmap(sbuf);
 
-	blit_tile_map(sbuf, &map1, 50, 100);
+	//blit_tile_map(sbuf, &map1, 50, 100);
+	init_metro_map();
+	blit_tile_map(sbuf, &metro_map, 5, 5);
 	blit(sbuf, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
 	/*image_t1 = load_tile_bitmap(&t1, 3, 11);
@@ -216,6 +249,8 @@ int main(int argc, char *argv[])
 	destroy_bitmap(image_t3);
 	destroy_bitmap(image_t2);
 	destroy_bitmap(image_t1);*/
+
+	destroy_bitmap(sbuf);
 
 	set_gfx_mode(GFX_TEXT, 0, 0, 0, 0);
 	/*printf("Hello, iso, attempt #3, tst: %d\n", 0b0011);
