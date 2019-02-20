@@ -35,6 +35,7 @@ struct tile_map {
 	struct tile_map_layer *layers;
 };
 
+struct tile_map_node g_z_tile_map_node;
 struct tile_map map1;
 
 #endif /* _MAP_DS_H_INCLUDED_ */

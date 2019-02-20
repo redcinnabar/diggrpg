@@ -11,7 +11,7 @@
 /***********************************************/
 #define MAP_SIZE_X	48
 #define MAP_SIZE_Y	35
-#define MAP_SIZE_Z	5
+#define MAP_SIZE_Z	10
 
 
 
@@ -76,6 +76,10 @@ t7,t7,t7,t7,t7,t7,t7,t7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 t7,t7,t7,t7,t7,t7,t7,t7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,t7,t7,t7,t7,t7,t7,t7,t7
 };
 int *l1_1[] = {
+ wall1_l, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
+ 0, 0, 0, 0, 0, 0, 0,       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+ 0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
+ 0, 0, 0, 0, 0, 0, 0,       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
  0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
  0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
  0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
@@ -98,34 +102,31 @@ int *l1_1[] = {
  0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
  0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
  0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
+ 0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,       0,
  0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
  0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
  0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
  0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
  0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
  0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
+ wall1_l, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
+ 0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
+ 0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
+ 0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
+ wall1_l, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
+ wall1_l, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
  0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
  0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
  0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
  0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
  0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
- 0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
- 0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
- 0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
- 0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
- 0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
- 0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
- 0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
- 0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
- 0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
- 0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
- 0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
- 0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
+ 0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
  0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
  0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
  0, 0, 0, 0, 0, 0, 0, wall1_r, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r
 };
-#define OBJ_COUNT_L1_1	(MAP_SIZE_Y * 2)
+#define OBJ_COUNT_L1_1	(MAP_SIZE_Y * 2 + 4)
+/* type: TILE_TYPE */
 int *l2[] = {
  0, 0, 0, 0, 0, 0, 0, 0,t1,t3,t3,t3,t3,t3,t3,t3,t3,t3,t3,t3,t3,t3,t3,t3,t3,t3,t1, 0, 0, 0, 0, 0, 0, 0, 0,
  0, 0, 0, 0, 0, 0, 0, 0,t1,t3,t3,t3,t3,t3,t3,t3,t3,t3,t3,t3,t3,t3,t3,t3,t3,t3,t1, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -176,6 +177,7 @@ int *l2[] = {
  0, 0, 0, 0, 0, 0, 0, 0,t1,t3,t3,t3,t3,t3,t3,t3,t3,t3,t3,t3,t3,t3,t3,t3,t3,t3,t1, 0, 0, 0, 0, 0, 0, 0, 0,
  0, 0, 0, 0, 0, 0, 0, 0,t1,t3,t3,t3,t3,t3,t3,t3,t3,t3,t3,t3,t3,t3,t3,t3,t3,t3,t1, 0, 0, 0, 0, 0, 0, 0, 0
 };
+/* type: TILE_TYPE2 */
 int *l_col[] = {
  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -228,6 +230,7 @@ int *l_col[] = {
 };
 #define OBJ_COUNT_L_COL	(6 * 2)
 
+/* type: TILE_TYPE2_WALL_R */
 int *l_wall[] = {
  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, wall1_r,
@@ -282,17 +285,22 @@ int *l_wall[] = {
 
 struct tile_map_layer layers[MAP_SIZE_Z + 1];
 struct tile_map_node floor_nodes[2][MAP_SIZE_Y][MAP_SIZE_X];
-struct tile_map_node *floor_node_lines[2][MAP_SIZE_Y + 1];
+struct tile_map_node *floor_node_lines[2][MAP_SIZE_Y + 1]; /* point to floor_nodes */
+
+/* for walls and items */
+struct tile_map_node *item_nodes[MAP_SIZE_Z][MAP_SIZE_Y][MAP_SIZE_X];
+struct tile_map_node **item_node_lines[MAP_SIZE_Z][MAP_SIZE_Y + 1];
+
 #define OBJ_TILE_NODES_POOL_SIZE \
-	(OBJ_COUNT_L1_1 * 2 + (OBJ_COUNT_L_COL * 2 + OBJ_COUNT_L_WALL * 2) * (MAP_SIZE_Z - 1))
-/*struct tile_map_node obj_tile_map_nodes_pool[OBJ_TILE_NODES_POOL_SIZE + 1];
+	(OBJ_COUNT_L1_1 * 2 * 2 + (OBJ_COUNT_L_COL * 2 + OBJ_COUNT_L_WALL * 2) * (MAP_SIZE_Z - 1))
+struct tile_map_node obj_tile_map_nodes_pool[OBJ_TILE_NODES_POOL_SIZE + 1];
 struct tile_map_node *last_tile_map_nodes_pool;
 inline struct tile_map_node *get_tile_node()
 {
 	struct tile_map_node *res = last_tile_map_nodes_pool;
 	++last_tile_map_nodes_pool;
 	return res;
-}*/
+}
 
 #define METRO_MAP_FLOOR_FG	1
 #define METRO_MAP_FLOOR_BG	2
@@ -302,8 +310,8 @@ struct tile_map metro_map = {MAP_SIZE_X, MAP_SIZE_Y, MAP_SIZE_Z, layers};
 void init_metro_map()
 {
 	int i, j, k;
-	int **p;
-	//last_tile_nodes_pool = obj_tile_nodes_pool;
+	int **p, **q;
+	last_tile_map_nodes_pool = obj_tile_map_nodes_pool;
 	//struct tile_map_layer *layers[MAP_SIZE_Z + 1];
 
 	//floors
@@ -311,24 +319,78 @@ void init_metro_map()
 	for (k = 0; k <= 1; ++k) {
 		p = p_list[k];
 		for (i = 0; i < MAP_SIZE_X; ++i) {
-			for (j = 0; j < MAP_SIZE_Y; ++j) {
+			for (j = MAP_SIZE_Y - 1; j >= 0; --j) {
 				struct tile_map_node cur = {TILE_TYPE, *p, METRO_MAP_FLOOR_FG, METRO_MAP_FLOOR_BG};
 				floor_nodes[k][j][i] = cur;
 				++p;
 			}
 		}
-		for (j = 0; j < MAP_SIZE_Y; ++j) {
+		for (j = 0; j < MAP_SIZE_Y; ++j)
 			floor_node_lines[k][j] = &(floor_nodes[k][j][0]);
-		}
 	}
 
+	//walls and items
+	//struct tile_map_layer cur_layer2
+	p = l1_1;
+	for (i = 0; i < MAP_SIZE_X; ++i) {
+		for (j = MAP_SIZE_Y - 1; j >= 0; --j) {
+			if (*p) {
+				struct tile_map_node cur = {TILE_TYPE2_WALL_R, *p, 1+METRO_MAP_FLOOR_FG, 1+METRO_MAP_FLOOR_BG};
+				struct tile_map_node *wall = get_tile_node();
+				*wall = cur;
+				struct tile_map_node *znode = get_tile_node();
+				*znode = g_z_tile_map_node;
+				item_nodes[0][j][i] = wall;
+			} else {
+				item_nodes[0][j][i] = NULL;
+			}
+			++p;
+		}
+	}
+	for (j = 0; j < MAP_SIZE_Y; ++j)
+		item_node_lines[0][j] = &(item_nodes[0][j][0]);
+
+	//columns and back wall
+	p = l_wall;
+	q = l_col;
+	for (i = 0; i < MAP_SIZE_X; ++i) {
+		for (j = MAP_SIZE_Y - 1; j >= 0; --j, ++p, ++q) {
+			if (!*p && !*q) {
+			} else {
+				struct tile_map_node *node = get_tile_node();
+				if (*p) {
+					struct tile_map_node cur = {TILE_TYPE2_WALL_R, *p, 0+METRO_MAP_FLOOR_FG, 0+METRO_MAP_FLOOR_BG};
+					*node = cur;
+				}
+				if (*q) {
+					struct tile_map_node *n_node = node;
+					if (*p)
+						n_node = get_tile_node();
+					struct tile_map_node cur = {TILE_TYPE2, *q, 0+METRO_MAP_FLOOR_FG, 0+METRO_MAP_FLOOR_BG};
+					*n_node = cur;
+				}
+				struct tile_map_node *znode = get_tile_node();
+				*znode = g_z_tile_map_node;
+				item_nodes[1][j][i] = node;
+			}
+		}
+	}
+	for (j = 0; j < MAP_SIZE_Y; ++j)
+		item_node_lines[1][j] = &(item_nodes[1][j][0]);
+
 	//L1
-	struct tile_map_layer cur_layer1 = {0, &(floor_node_lines[0][0]), NULL};
+	struct tile_map_layer cur_layer1 = {0, &(floor_node_lines[0][0]), &(item_node_lines[0][0])};
 	layers[0] = cur_layer1;
-	struct tile_map_layer cur_layer2 = {1, &(floor_node_lines[1][0]), NULL};
+	struct tile_map_layer cur_layer2 = {1, NULL, &(item_node_lines[0][0])};
 	layers[1] = cur_layer2;
+	struct tile_map_layer cur_layer4 = {2, &(floor_node_lines[1][0]), &(item_node_lines[1][0])};
+	layers[2] = cur_layer4;
+	for (i = 3; i <= 8; ++i) {
+		struct tile_map_layer cur = {i, NULL, &(item_node_lines[1][0])};
+		layers[i] = cur;
+	}
 	struct tile_map_layer end_layer = {-1, NULL, NULL};
-	layers[2] = end_layer;
+	layers[9] = end_layer;
 	//DEBUG!!!
 	//layers[1] = end_layer;
 }
