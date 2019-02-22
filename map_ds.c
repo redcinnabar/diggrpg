@@ -8,7 +8,7 @@
 
 struct tile_map_node g_z_tile_map_node = {0, };
 
-struct tile_map_node
+static struct tile_map_node
 	nl1l1[] = {{0, t4, 1, 2},{0, t4, 4,12},{0, t4, 7, 8},{0, t4, 4,12}, {0, t4, 4,12},{0, t4, 4,12},{0, t4, 4,12} },
 	nl2l1[] = {{0, t4, 1, 2},{0, t3, 1, 6},{0, t3, 7, 8},{0, t3, 4,12}, {0, t4, 12,4},{0, t4, 4,12},{0, t4, 4,12} },
 	nl3l1[] = {{0, t4, 1, 2},{0, t3, 5, 6},{0, t3, 7, 8},{0, t5, 4,12}, {0, t4, 4,12},{0, t4, 4,12},{0, t4, 4,12} },
@@ -17,10 +17,10 @@ struct tile_map_node
 	nl6l1[] = {{0, t6, 1, 2},{0, t1, 5, 6},{0, t1, 7, 8},{0, t2, 4,12}, {0, t4, 4,12},{0, t4, 4,12},{0, t4, 4,12} },
 	nl7l1[] = {{0, t4, 1, 2},{0, t1, 5, 6},{0, t1, 7, 8},{0, t2, 7, 8}, {0, t4, 4,12},{0, t4, 4,12},{0, t4, 4,12} },
 	nl8l1[] = {{0, t4, 1, 2},{0, t4, 5, 6},{0, t4, 7, 8},{0, t4, 4,12}, {0, t4, 4,12},{0, t4, 4,12},{0, t4, 4,12} };
-struct tile_map_node *node_lines_l1[] =
+static struct tile_map_node *node_lines_l1[] =
 	{ nl1l1, nl2l1, nl3l1, nl4l1, nl5l1, nl6l1, nl7l1, nl8l1 };
 
-struct tile_map_node
+static struct tile_map_node
 	nl1x1l1[] = {{TILE_TYPE2_WALL_L, wall1_l, 3, 4}, {TILE_TYPE2_WALL_R, wall1_r, 4, 5}, {0, }},
 	nl1x2l1[] = {{TILE_TYPE2_WALL_L, wall1_l, 5, 6}, {0, }},
 	nl1x3l1[] = {{TILE_TYPE2_WALL_L, wall1_l, 6, 7}, {0, }},
@@ -33,7 +33,7 @@ struct tile_map_node
 	nl5x6l1[] = {{2, tm1_2, 1, 14}, {0, }},
 	nl6x1l1[] = {{TILE_TYPE2_WALL_R, wall1_r,14,15}, {0, }},
 	nl7x1l1[] = {{TILE_TYPE2_WALL_R, wall1_r,16,17}, {0, }};
-struct tile_map_node
+static struct tile_map_node
 	*nl_l1l1[] = {nl1x1l1, 0, 0, 0, nl5x1l1, nl6x1l1, nl7x1l1},
 	*nl_l2l1[] = {nl1x2l1, 0, 0, 0, 0,       0,       0},
 	*nl_l3l1[] = {nl1x3l1, 0, 0, 0, 0,       0,       0},
@@ -42,10 +42,10 @@ struct tile_map_node
 	*nl_l6l1[] = {nl1x6l1, 0, 0, 0, nl5x6l1, 0,       0},
 	*nl_l7l1[] = {nl1x7l1, 0, 0, 0, 0,       0,       0},
 	*nl_l8l1[] = {nl1x8l1, 0, 0, 0, 0,       0,       0};
-struct tile_map_node** node_lines_ll1[] =
+static struct tile_map_node** node_lines_ll1[] =
 	{ nl_l1l1, nl_l2l1, nl_l3l1, nl_l4l1, nl_l5l1, nl_l6l1, nl_l7l1, nl_l8l1 };
 
-struct tile_map_layer layers[] = {
+static struct tile_map_layer layers[] = {
 	{ 0, node_lines_l1, node_lines_ll1 },
 	//{ 0, NULL, node_lines_ll1 },
 	//{ 0, node_lines_l2, NULL },

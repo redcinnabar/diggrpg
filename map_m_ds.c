@@ -295,7 +295,7 @@ struct tile_map_node **item_node_lines[MAP_SIZE_Z][MAP_SIZE_Y + 1];
 	(OBJ_COUNT_L1_1 * 2 * 2 + (OBJ_COUNT_L_COL * 2 + OBJ_COUNT_L_WALL * 2) * (MAP_SIZE_Z - 1))
 struct tile_map_node obj_tile_map_nodes_pool[OBJ_TILE_NODES_POOL_SIZE + 1];
 struct tile_map_node *last_tile_map_nodes_pool;
-inline struct tile_map_node *get_tile_node()
+/*inline*/ struct tile_map_node *get_tile_node()
 {
 	struct tile_map_node *res = last_tile_map_nodes_pool;
 	++last_tile_map_nodes_pool;

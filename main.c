@@ -48,6 +48,7 @@ BITMAP *load_tile_bitmap(tile_t *t, unsigned char fg, unsigned char bg)
 	return image;
 }
 
+/* blit tile into BITMAP */
 void blit_tile(BITMAP *sbuf, enum tile_type type, int *t, int sx, int sy,
 				unsigned char fg, unsigned char bg)
 {
@@ -56,13 +57,14 @@ void blit_tile(BITMAP *sbuf, enum tile_type type, int *t, int sx, int sy,
 	int *cur_t, *cur_t_mask;
 	int bit_mask;
 	int sy_off = 0;
-	int rsy;
+	int rsy, rsx; /* real start y, start x */
 	union tile_mask_2u *conv_2u;
-	int width, height;
+	int ex, ey;
 
 	if (sx >= sbuf->w)
 		return;
 
+	/* get offset for high tiles */
 	cur_t = t;
 	switch (type) {
 	case TILE_TYPE2:
@@ -81,8 +83,9 @@ void blit_tile(BITMAP *sbuf, enum tile_type type, int *t, int sx, int sy,
 		break;
 	}
 
+	/* calculate visible part limits */
 	rsy = sy - sy_off;
-	if (rsy <= 0) {
+	if (rsy < 0) {
 		cur_t -= rsy;
 		cur_t_mask -= rsy;
 		rsy = 0;
@@ -91,18 +94,24 @@ void blit_tile(BITMAP *sbuf, enum tile_type type, int *t, int sx, int sy,
 	if (rsy > sbuf->h)
 		return;
 
-	height = TILE_SIZE_H + sy;
-	if (height > sbuf->h)
-		height = sbuf->h;
-	width = sx + TILE_SIZE_W;
-	if (width > sbuf->w)
-		width = sbuf->w;
-	// TODO: limit on BITMAP height
-	for (i = rsy; i < height; ++i) {
-		line = sbuf->line[i] + sx;
-		// TODO: limit on BITMAP width
-		for (j = width - sx - 1; j >= 0; --j, ++line) {
-			bit_mask = 1 << j; //TODO: LSB? TODO: fix when on width limit
+	rsx = sx;
+	if (rsx < 0)
+		rsx = 0;
+
+	ey = TILE_SIZE_H + sy;
+	if (ey > sbuf->h)
+		ey = sbuf->h;
+	ex = sx + TILE_SIZE_W;
+	if (ex > sbuf->w)
+		ex = sbuf->w;
+
+	/* draw with limit on visible parts */
+	for (i = rsy; i < ey; ++i) {
+		line = sbuf->line[i] + rsx;
+		for (j = TILE_SIZE_W - 1 - (rsx - sx);
+				j >= sx + TILE_SIZE_W - ex;
+				--j, ++line) {
+			bit_mask = 1 << j; //TODO: LSB?
 			if (*cur_t_mask & bit_mask) {
 				if (*cur_t & bit_mask)
 					*line = fg;
@@ -134,6 +143,10 @@ void blit_tile_map(BITMAP *sbuf, struct tile_map *map, int xo, int yo)
 				sy = yo + (i + j) * (TILE_SIZE_H >> 1)
 					+ TILE_SIZE_H * (map->l - level);
 				//printf("DEBUG: sx: %d; sy: %d\n", sx, sy);
+				/* skip invisible tiles rendering */
+				if ((sx + TILE_SIZE_W) <= 0 && (sy + TILE_SIZE_H) <= 0)
+					continue;
+				/* single tile node, generally floor */
 				if (cur_layer->tn) {
 					cnode = &(cur_layer->tn[j][i]);
 					if (cnode->t)
@@ -141,6 +154,7 @@ void blit_tile_map(BITMAP *sbuf, struct tile_map *map, int xo, int yo)
 							cnode->t, sx, sy,
 							cnode->fg, cnode->bg);
 				}
+				/* tile node zero-ended list */
 				if (cur_layer->tn_list) {
 					cnode = cur_layer->tn_list[j][i];
 					while (cnode && cnode->t) {
@@ -216,7 +230,7 @@ int main(int argc, char *argv[])
 
 	//blit_tile_map(sbuf, &map1, 50, 100);
 	init_metro_map();
-	blit_tile_map(sbuf, &metro_map, 5, 5);
+	blit_tile_map(sbuf, &metro_map, -150, -150);
 	blit(sbuf, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 
 	/*image_t1 = load_tile_bitmap(&t1, 3, 11);
