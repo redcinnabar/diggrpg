@@ -172,17 +172,61 @@ void blit_tile_map(BITMAP *sbuf, struct tile_map *map, int xo, int yo)
 }
 
 
-void app_main_loop()
+int profile_blit_tile_map()
 {
 	BITMAP *sbuf = create_bitmap_ex(8, SCREEN_W, SCREEN_H);
-	clear_bitmap(sbuf);
+	int xoff = 0;
+	int yoff = 0;
 
-	//blit_tile_map(sbuf, &map1, 50, 100);
-	init_metro_map();
-	blit_tile_map(sbuf, &metro_map, -150, -150);
-	blit(sbuf, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+	for (xoff = -500; xoff < 0; ++xoff) {
+		clear_bitmap(sbuf);
 
-	readkey();
+		init_metro_map();
+		blit_tile_map(sbuf, &metro_map, -150 + xoff, -150 + yoff);
+		blit(sbuf, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+	}
+	destroy_bitmap(sbuf);
+}
+
+
+void app_main_loop()
+{
+	int key;
+	int is_quit = 0;
+	BITMAP *sbuf = create_bitmap_ex(8, SCREEN_W, SCREEN_H);
+	int xoff = 0;
+	int yoff = 0;
+
+	while(!is_quit) {
+		clear_bitmap(sbuf);
+
+		init_metro_map();
+		blit_tile_map(sbuf, &metro_map, -150 + xoff, -150 + yoff);
+		blit(sbuf, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+
+		key = readkey();
+		if ((key & 0xff) == 'q')
+			is_quit = 1;
+		else {
+			switch (key >> 8) {
+			case KEY_RIGHT:
+				xoff += 1;
+				break;
+			case KEY_LEFT:
+				xoff -= 1;
+				break;
+			case KEY_UP:
+				yoff -= 1;
+				break;
+			case KEY_DOWN:
+				yoff += 1;
+				break;
+			case KEY_ESC:
+				is_quit = 1;
+				break;
+			}
+		}
+	}
 
 	destroy_bitmap(sbuf);
 }
@@ -242,6 +286,7 @@ int main(int argc, char *argv[])
 	}
 
 	/* start main loop */
+	//profile_blit_tile_map();
 	app_main_loop();
 
 	/* many old code to be removed when all will work */
