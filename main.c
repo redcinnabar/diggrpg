@@ -172,6 +172,22 @@ void blit_tile_map(BITMAP *sbuf, struct tile_map *map, int xo, int yo)
 }
 
 
+void app_main_loop()
+{
+	BITMAP *sbuf = create_bitmap_ex(8, SCREEN_W, SCREEN_H);
+	clear_bitmap(sbuf);
+
+	//blit_tile_map(sbuf, &map1, 50, 100);
+	init_metro_map();
+	blit_tile_map(sbuf, &metro_map, -150, -150);
+	blit(sbuf, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+
+	readkey();
+
+	destroy_bitmap(sbuf);
+}
+
+
 char *map_name_test1 = "test1";
 char *map_name_metro = "metro";
 char *map_name_list[] = {"test1", "metro", NULL};
@@ -225,13 +241,17 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	BITMAP *sbuf = create_bitmap_ex(8, SCREEN_W, SCREEN_H);
+	/* start main loop */
+	app_main_loop();
+
+	/* many old code to be removed when all will work */
+	/*BITMAP *sbuf = create_bitmap_ex(8, SCREEN_W, SCREEN_H);
 	clear_bitmap(sbuf);
 
 	//blit_tile_map(sbuf, &map1, 50, 100);
 	init_metro_map();
 	blit_tile_map(sbuf, &metro_map, -150, -150);
-	blit(sbuf, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+	blit(sbuf, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);*/
 
 	/*image_t1 = load_tile_bitmap(&t1, 3, 11);
 	image_t2 = load_tile_bitmap(&t2, 4, 12);
@@ -254,7 +274,7 @@ int main(int argc, char *argv[])
 	masked_blit(image_t6, screen, 0, 0, TILE_SIZE_W, TILE_SIZE_H,
 			image_t6->w, image_t6->h);*/
 	
-	readkey();
+	//readkey();
 
 
 	/*destroy_bitmap(image_t6);
@@ -264,7 +284,7 @@ int main(int argc, char *argv[])
 	destroy_bitmap(image_t2);
 	destroy_bitmap(image_t1);*/
 
-	destroy_bitmap(sbuf);
+	/*destroy_bitmap(sbuf);*/
 
 	set_gfx_mode(GFX_TEXT, 0, 0, 0, 0);
 	/*printf("Hello, iso, attempt #3, tst: %d\n", 0b0011);
